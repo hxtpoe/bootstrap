@@ -1,4 +1,9 @@
-<ul class="dropdown-menu" ng-style="{display: (isOpen && 'block') || 'none', top: position.top+'px', left: position.left+'px'}" ng-keydown="keydown($event)">
+<ul class="dropdown-menu" ng-style="{display: (isOpen && 'block') || 'none',
+position: 'absolute',
+top: position.top,
+left: position.left,
+right: position.right,
+bottom: position.bottom}" ng-keydown="keydown($event)">
 	<li ng-transclude></li>
 	<li ng-if="showButtonBar" style="padding:10px 9px 2px">
 		<span class="btn-group pull-left">
