@@ -684,20 +684,24 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
           scope.$broadcast('datepicker.focus');
           scope.position = appendToBody ? $position.offset(element) : $position.position(element);
 
-          if(!scope.forcePosition || scope.forcePosition === 'left-bottom') {
+          var clearPosition = function() {
             scope.position.top = scope.position.bottom = scope.position.left = scope.position.right = 'initial';
+          };
+
+          if(!scope.forcePosition || scope.forcePosition === 'left-bottom') {
+            clearPosition();
             scope.position.left = 0;
             scope.position.top = $position.position(element).height  + 'px';
           } else if(scope.forcePosition === 'right-bottom') {
-            scope.position.top = scope.position.bottom = scope.position.left = scope.position.right = 'initial';
+            clearPosition();
             scope.position.right = 0;
             scope.position.top = $position.position(element).height  + 'px';
           } else if(scope.forcePosition === 'right-top') {
-            scope.position.top = scope.position.bottom = scope.position.left = scope.position.right = 'initial';
+            clearPosition();
             scope.position.right = 0;
             scope.position.bottom = $position.position(element).height + 'px';
           } else if(scope.forcePosition === 'left-top') {
-            scope.position.top = scope.position.bottom = scope.position.left = scope.position.right = 'initial';
+            clearPosition();
             scope.position.left = 0;
             scope.position.bottom = $position.position(element).height + 'px';
           }
