@@ -471,7 +471,9 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       clearText: '@',
       closeText: '@',
       dateDisabled: '&',
-      customClass: '&'
+      customClass: '&',
+      position: '@'
+
     },
     link: function(scope, element, attrs, ngModel) {
       var dateFormat,
@@ -682,7 +684,28 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
         if (value) {
           scope.$broadcast('datepicker.focus');
           scope.position = appendToBody ? $position.offset(element) : $position.position(element);
-          scope.position.top = scope.position.top + element.prop('offsetHeight');
+
+          var clearPosition = function() {
+            scope.position.top = scope.position.bottom = scope.position.left = scope.position.right = 'initial';
+          };
+
+          if (!scope.position || scope.position === 'bottom-left') {
+            clearPosition();
+            scope.position.left = 0;
+            scope.position.top = $position.position(element).height  + 'px';
+          } else if (scope.position === 'bottom-right') {
+            clearPosition();
+            scope.position.right = 0;
+            scope.position.top = $position.position(element).height  + 'px';
+          } else if (scope.position === 'top-right') {
+            clearPosition();
+            scope.position.right = 0;
+            scope.position.bottom = $position.position(element).height + 'px';
+          } else if (scope.position === 'top-left') {
+            clearPosition();
+            scope.position.left = 0;
+            scope.position.bottom = $position.position(element).height + 'px';
+          }
 
           $document.bind('click', documentClickBind);
         } else {

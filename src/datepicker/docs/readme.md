@@ -119,6 +119,10 @@ Specific settings for the `datepicker-popup`, that can globally configured throu
   _(Default: false)_:
   Append the datepicker popup element to `body`, rather than inserting after `datepicker-popup`. For global configuration, use `datepickerPopupConfig.appendToBody`.
 
+ * `position`
+  _(Default: 'bottom-left')_ :
+  Where datepicker should be displayed. Options _(bottom-left|bottom-right|top-left|top-right)_
+
 ### Keyboard Support ###
 
 Depending on datepicker's current mode, the date may reffer either to day, month or year. Accordingly, the term view reffers either to a month, year or year range.
