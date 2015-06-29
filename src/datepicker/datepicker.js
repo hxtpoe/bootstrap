@@ -471,7 +471,9 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       clearText: '@',
       closeText: '@',
       dateDisabled: '&',
-      customClass: '&'
+      customClass: '&',
+      position: '@'
+
     },
     link: function(scope, element, attrs, ngModel) {
       var dateFormat,
@@ -681,8 +683,29 @@ function ($compile, $parse, $document, $position, dateFilter, dateParser, datepi
       scope.$watch('isOpen', function(value) {
         if (value) {
           scope.$broadcast('datepicker.focus');
-          scope.position = appendToBody ? $position.offset(element) : $position.position(element);
-          scope.position.top = scope.position.top + element.prop('offsetHeight');
+          scope.popupPosition = appendToBody ? $position.offset(element) : $position.position(element);
+
+          var clearPosition = function() {
+            scope.popupPosition.top = scope.popupPosition.bottom = scope.popupPosition.left = scope.popupPosition.right = 'initial';
+          };
+
+          if (!scope.position || scope.position === 'bottom-left') {
+            clearPosition();
+            scope.popupPosition.left = 0;
+            scope.popupPosition.top = $position.position(element).height  + 'px';
+          } else if (scope.position === 'bottom-right') {
+            clearPosition();
+            scope.popupPosition.right = 0;
+            scope.popupPosition.top = $position.position(element).height  + 'px';
+          } else if (scope.position === 'top-right') {
+            clearPosition();
+            scope.popupPosition.right = 0;
+            scope.popupPosition.bottom = $position.position(element).height + 'px';
+          } else if (scope.position === 'top-left') {
+            clearPosition();
+            scope.popupPosition.left = 0;
+            scope.popupPosition.bottom = $position.position(element).height + 'px';
+          }
 
           $document.bind('click', documentClickBind);
         } else {
